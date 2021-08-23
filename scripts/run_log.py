@@ -1,70 +1,14 @@
 from roguelife.game.game import Game
 from roguelife.evo.evo import EvoAlg
 from roguelife.agents.rulebased import RuleBasedAgent0, RuleBasedAgent1, RuleBasedAgent2, RuleBasedAgent3, RandomAgent
-import random 
+from util.sparser import parse_spec
+import random
 import time
+import os
 import sys
 
-gen_param_specs = {
-    'initial_rock_density' : {
-        'dtype' : float,
-        'min' : 0.1,
-        'max' : 0.4
-    },
-    'initial_tree_density' : {
-        'dtype' : float,
-        'min' : 0.1,
-        'max' : 0.4
-    },
-    'rock_refinement_runs' : {
-        'dtype' : int,
-        'min' : 1,
-        'max' : 3
-    },
-    'tree_refinement_runs' : {
-        'dtype' : int,
-        'min' : 1,
-        'max' : 3
-    },
-    'rock_neighbour_depth' : {
-        'dtype' : int,
-        'min' : 1,
-        'max' : 2
-    },
-    'tree_neighbour_depth' : {
-        'dtype' : int,
-        'min' : 1,
-        'max' : 2
-    },
-    'rock_neighbour_number' : {
-        'dtype' : int,
-        'min' : 4,
-        'max' : 8
-    },
-    'tree_neighbour_number' : {
-        'dtype' : int,
-        'min' : 4,
-        'max' : 8
-    },
-    'base_clear_depth' : {
-        'dtype' : int,
-        'min' : 1,
-        'max' : 1
-    },
-    'enemies_crush_trees' : {
-        'dtype' : bool
-    },
-    'random_seed' : {
-        'dtype' : int,
-        'min' : 1,
-        'max' : 9999
-    },
-    'flee_distance' : {
-        'dtype' : int,
-        'min' : 0,
-        'max' : 10
-    }
-}
+pwd = os.path.dirname(os.path.realpath(__file__))
+gen_param_specs = parse_spec(os.path.join(pwd, 'data', 'spec_std.json'))
 
 ea = EvoAlg(gen_param_specs)
 env = Game(evo_system=ea)
@@ -78,8 +22,7 @@ agent_classes = {
     'RR' : RandomAgent
 }
 
-
-generations = 30
+generations = 1
 
 run_limit = generations * ea.population_size
 
